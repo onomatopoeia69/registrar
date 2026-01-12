@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Attributes\Validate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -10,9 +11,23 @@ new
 #[Title('Registrar')]
 class extends Component
 {
+  #[Validate('required|email',as: 'email')]
+    public $username = '';
+
+   #[Validate('required')]
+    public $password = '';
+
+    public function login()
+    {       
+       $this->validate();   
+    }
+
+    public function resetFields()
+    {
+     $this->resetErrorBag();
+    }
 
 
- 
 
 };
 
@@ -34,23 +49,29 @@ class extends Component
                 
                 <form wire:submit="login" id="loginform">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" placeholder="admin@admin">
+                            <input type="email" class="form-control  @error('username') is-invalid   @else  @if(!empty($username))  @endif @enderror shadow-lg" wire:model='username' placeholder="admin@admin">
                             <label for="floatingInput">Email address</label>
+                             @error('username')
+                                <div  class="invalid-feedback" wire:transition>{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-floating mb-1">
-                            <input type="password" class="form-control" placeholder="password">
+                            <input type="password" class="form-control shadow-lg @error('password') is-invalid   @else  @if(!empty($password))  @endif @enderror" wire:model='password' placeholder="password">
                             <label for="floatingInput">Password</label>
+                             @error('password')
+                                <div  class="invalid-feedback" wire:transition>{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3 text-end">
                             <a href="" class="small text-decoration-none">Forgot Password?</a>
                         </div>
-                        <button type="submit"  class="btn btn-primary w-100 p-2">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg">Login</button>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
+
 
 
 <script>
@@ -58,28 +79,24 @@ class extends Component
 
 
 // gsap for animation
-
   const tl = gsap.timeline();
 
-        tl.from("#desc1", { 
+        tl.from(["#desc1", "#desc2", "#loginform"], { 
             y: -10, 
             opacity: 0, 
             duration: 1, 
-            ease: "power2.out" 
-        }) 
-        .from("#desc2", { 
-            y: -10, 
-            opacity: 0, 
-            duration: 1, 
-            ease: "power2.out" 
-        })
-
-        .from("#loginform", { 
-            y: -10, 
-            opacity: 0, 
-            duration: 1, 
+            stagger: 0.4, 
             ease: "power2.out" 
         });
-            
+
+// clear the errors when any field clicked 
+    const inputFields = document.querySelectorAll('input') 
+        inputFields.forEach( input =>{
+            input.addEventListener('click',()=>{
+                $wire.resetFields();
+            });
+        });
+ 
+  
 
 </script>
