@@ -22,7 +22,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('registrar')->group(function() {
-    Route::livewire('/login', 'pages::auth.index');
+    
+    Route::livewire('/login', 'pages::auth.login')->name('registrar.login');
+    Route::livewire('/dashboard', 'pages::registrar.dashboard');
+
 });
 
 
