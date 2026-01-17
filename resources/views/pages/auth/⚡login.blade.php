@@ -37,6 +37,13 @@ class extends Component
         $this->resetErrorBag();
     }
 
+    public function modal()
+    {
+
+        $this->dispatch('open-modal', id: 'forgetPassModal');
+
+    }
+
 
 };
 
@@ -79,11 +86,14 @@ class extends Component
 
                   
                         <div class="mb-3 text-end">
-                            <a href="" class="small text-decoration-none">Forgot Password?</a>
+                            <a class="small text-decoration-none" wire:click='modal' style="cursor: pointer;">Forgot Password?</a>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg">Login</button>
 
                 </form>
+
+                <x-modal id='forgetPassModal' title='Forgot Password?' noClick=true>Are you sure?</x-modal>
+
             </div>
         </div>
     </div>
@@ -92,6 +102,13 @@ class extends Component
 
 
 <script>
+
+document.addEventListener('open-modal', e => {
+    const modal = new bootstrap.Modal(
+        document.getElementById(e.detail.id)
+    );
+    modal.show();
+});
 
 
 
