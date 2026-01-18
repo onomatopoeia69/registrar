@@ -92,7 +92,10 @@ class extends Component
 
                 </form>
 
-                <x-modal id='forgetPassModal' title='Forgot Password?' noClick=true>Are you sure?</x-modal>
+                <x-modal id='forgetPassModal' size="modal-dialog-centered"  noClick=true >
+
+                    <livewire:pages::auth.forgot-pass />
+                </x-modal>
 
             </div>
         </div>
@@ -136,60 +139,45 @@ document.addEventListener('open-modal', e => {
 
 // add password eye toggler 
 
-    // let eyeBtn = document.querySelector('#eyeloginPassword');
-    // let passwordInput = document.querySelector('#loginPassword');
+    let eyeBtn = document.querySelector('#eyeloginPassword');
+    let passwordInput = document.querySelector('#loginPassword');
 
-    // passwordInput.addEventListener('input',(event)=>{
+    passwordInput.addEventListener('input',(event)=>{
 
-    //     let input = event.target.value;
+        let input = event.target.value;
 
-    //     if(input)
-    //     {
-    //         eyeBtn.classList.remove('d-none');
-    //      }else{
-    //         eyeBtn.classList.add('d-none');
-    //     }
+        if(input)
+        {
+            eyeBtn.classList.remove('d-none');
+         }else{
+            eyeBtn.classList.add('d-none');
+        }
     
-    // });
+    });
 
 // button to reveal the input password 
 
-    // eyeBtn.addEventListener('click',(event)=>{
+    eyeBtn.addEventListener('click',(event)=>{
 
-    //     let isPassword = passwordInput.type === 'password' ? true : false;
+        let isPassword = passwordInput.type === 'password' ? true : false;
 
-    //     if(isPassword)
-    //     {
-    //     passwordInput.type = 'text';
-    //     eyeBtn.classList.remove('bi-eye-fill');
-    //     eyeBtn.classList.add('bi-eye-slash-fill');
+        if(isPassword)
+        {
+        passwordInput.type = 'text';
+        eyeBtn.classList.remove('bi-eye-fill');
+        eyeBtn.classList.add('bi-eye-slash-fill');
 
-    //     }else{
-    //     passwordInput.type = 'password';
-    //     eyeBtn.classList.remove('bi-eye-slash-fill');
-    //     eyeBtn.classList.add('bi-eye-fill');
-    //     }
-
-
-    // });
+        }else{
+        passwordInput.type = 'password';
+        eyeBtn.classList.remove('bi-eye-slash-fill');
+        eyeBtn.classList.add('bi-eye-fill');
+        }
 
 
-    const eyeBtn = document.querySelector('#eyeloginPassword');
-const passwordInput = document.querySelector('#loginPassword');
+    });
 
-passwordInput.addEventListener('input', () => {
-    eyeBtn.classList.toggle('d-none', !passwordInput.value);
-});
 
-eyeBtn.addEventListener('click', () => {
-    const isPassword = passwordInput.type === 'password';
-
-    passwordInput.type = isPassword ? 'text' : 'password';
-
-    eyeBtn.classList.toggle('bi-eye-fill', !isPassword);
-    eyeBtn.classList.toggle('bi-eye-slash-fill', isPassword);
-});
-
+   
 
  
 

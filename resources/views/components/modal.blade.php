@@ -1,6 +1,5 @@
 @props([
     'id',
-    'title' => '',
     'size' => '',
     'noClick' => false
 ])
@@ -16,15 +15,11 @@
         data-bs-keyboard="false"
     @endif
 >
-    <div class="modal-dialog {{ $size }}" >
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">{{ $title }}</h5>
-                <button class="btn-close" wire:model="close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
+ <div class="modal-dialog {{ $size }}" >
+     <div class="modal-content">
+            
                {{ $slot }}
-            </div>
-        </div>
+
+     </div>
     </div>
 </div>
