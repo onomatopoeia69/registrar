@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,9 +34,17 @@ use Illuminate\Support\Facades\Route;
 
    });
 
-    Route::middleware(['auth'])->group( function() {
+    Route::middleware(['auth','role:registrar'])->group( function() {
         
-        Route::livewire('registrar/dashboard', 'pages::registrar.dashboard');  
+         Route::livewire('registrar/dashboard', 'pages::registrar.dashboard')->name('registrar.dashboard'); 
+
+
+         Route::post('/logout', function (Request $request) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('registrar.login')->with('message', 'Successfully logged out!');
+        })->name('logout');
 
     });
 

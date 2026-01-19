@@ -52,7 +52,7 @@ class User extends Authenticatable
         return $this->created_at->format('F d, Y');
     }
 
-
+    
 
 
 }

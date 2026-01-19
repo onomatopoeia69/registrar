@@ -28,9 +28,36 @@ class extends Component
             'password' => $this->password,
         ];
 
-        dd($credentials);
+        if (!Auth::attempt($credentials)) {
+
+            throw ValidationException::withMessages([
+                 'InvalidCredentials' => 'The provided credentials are incorrect.',
+             ]);
+        }
+
+         $this->reset();
+
+        $user = Auth::user();
+
+
+        session()->flash('welcome', 'Welcome back!');
+        session()->flash( 'time', now()->diffForHumans());
+        
+
+        switch ($user->role) {
+            case 'registrar':
+                return redirect()->route('registrar.dashboard');
+            case 'staff':
+                return redirect()->route('staff.dashboard');
+            default:
+               session()->flash( 'emailVerified', Auth::user()->is_email_verified);
+                return redirect()->route('users.dashboard');
+            }
+
 
     }
+
+
 
     public function resetFields()
     {
@@ -88,7 +115,13 @@ class extends Component
                         <div class="mb-3 text-end">
                             <a class="small text-decoration-none" wire:click='modal' style="cursor: pointer;">Forgot Password?</a>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg">Login</button>
+                         
+
+                        <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg mb-1">Login</button>
+
+                        @error('InvalidCredentials')
+                            <div class="invalid-feedback d-block">{{$message}}</div>
+                        @enderror
 
                 </form>
 
