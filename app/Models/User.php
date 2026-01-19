@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'profile'
     ];
 
     /**
@@ -42,4 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    
+    public function getFormattedCreatedAtAttribute(): string
+    {
+        return $this->created_at->format('F d, Y');
+    }
+
+
+
+
 }

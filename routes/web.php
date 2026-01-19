@@ -18,14 +18,25 @@ use Illuminate\Support\Facades\Route;
 
 
 
-// guests
+// student login 
 
 
-Route::prefix('registrar')->group(function() {
+
+
+   Route::middleware('guest')->group( function() {
+
+    // registrar login
+    Route::livewire('registrar/login', 'pages::auth.login')->name('registrar.login');
+  
+
+    // student login 
+
+   });
+
+    Route::middleware(['auth'])->group( function() {
+        
+        Route::livewire('registrar/dashboard', 'pages::registrar.dashboard');  
+
+    });
+
     
-    Route::livewire('/login', 'pages::auth.login')->name('registrar.login');
-    Route::livewire('/dashboard', 'pages::registrar.dashboard');
-
-});
-
-
