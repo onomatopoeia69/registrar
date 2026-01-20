@@ -11,7 +11,7 @@ new class extends Component
         session()->invalidate();
         session()->regenerateToken();
 
-         return $this->redirectRoute('registrar.login', navigate:true);
+         return redirect()->route('registrar.login');
     }
 };
 ?>

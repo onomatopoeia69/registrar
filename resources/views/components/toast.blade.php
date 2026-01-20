@@ -13,7 +13,7 @@
      wire:ignore
      >
 
-    <div class="toast-header bg-{{ $color }} text-{{ $text }}">
+    <div class="toast-header bg-{{ $color }} border-0 text-{{ $text }} ">
         <i class="bi bi-bell-fill me-2"></i>
         <strong class="me-auto">Notification</strong>
         <small>{{ $time }}</small>

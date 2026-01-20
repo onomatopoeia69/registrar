@@ -22,20 +22,19 @@ class extends Component
     </x-adminlte-card>
 
 
-    <div class="toast-container position-fixed  bottom-0 end-0 p-3" style="z-index: 1055;">
-
-        
+    
         @if (session('welcome'))
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
 
         <x-toast color="success" id='liveToast' text="white" time="{{session('time')}}" >
             {{session('welcome')}} <span class="text-red"> {{Auth::user()->first_name}}</span> 
         </x-toast>
 
         </div>
+
         @endif
-
-
-    </div> 
+    
         
 </div>
 
@@ -44,14 +43,11 @@ class extends Component
 
         var liveToast = document.getElementById('liveToast');
 
+        
         if (liveToast) {
             new bootstrap.Toast(liveToast).show();
         }
 
-        var emailToast = document.getElementById('emailToast');
-        if (emailToast) {
-            new bootstrap.Toast(emailToast).show();
-        }
 
 
 </script>
