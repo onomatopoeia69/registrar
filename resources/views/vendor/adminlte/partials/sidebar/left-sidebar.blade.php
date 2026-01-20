@@ -21,8 +21,6 @@
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
             </ul>
-            
-
         </nav>
     </div>
 

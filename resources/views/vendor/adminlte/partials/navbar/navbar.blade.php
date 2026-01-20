@@ -38,4 +38,5 @@
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
         @endif
     </ul>
+
 </nav>

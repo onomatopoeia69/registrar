@@ -46,14 +46,13 @@ class extends Component
 
         switch ($user->role) {
             case 'registrar':
-                return redirect()->route('registrar.dashboard');
+                return $this->redirectRoute('registrar.dashboard', navigate:true);
             case 'staff':
                 return redirect()->route('staff.dashboard');
             default:
                session()->flash( 'emailVerified', Auth::user()->is_email_verified);
                 return redirect()->route('users.dashboard');
             }
-
 
     }
 
@@ -125,9 +124,10 @@ class extends Component
 
                 </form>
 
-                <x-modal id='forgetPassModal' size="modal-dialog-centered"  noClick=true >
+                <x-modal id='forgetPassModal' size="modal-dialog-centered" noClick=true >
 
                     <livewire:pages::auth.forgot-pass />
+                    
                 </x-modal>
 
             </div>
