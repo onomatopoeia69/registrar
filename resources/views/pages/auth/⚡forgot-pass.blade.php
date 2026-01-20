@@ -6,7 +6,7 @@ use Livewire\Component;
 new class extends Component
 {   
 
-    #[Validate('required',as: 'email')]
+    #[Validate('required|exists:users,email,role,!student', as: 'email')]
     public $fgEmail = '';
    
     public function send()
@@ -36,13 +36,13 @@ new class extends Component
 
     <form wire:submit="send">
          <div class="form-floating mb-4">
-             <input type="email" class="form-control  @error('fgEmail') is-invalid   @else  @if(!empty($fgEmail))  @endif @enderror shadow-lg" wire:model.live='fgEmail' placeholder="admin@admin">
+             <input type="email" class="form-control  @error('fgEmail') is-invalid   @else  @if(!empty($fgEmail))  @endif @enderror shadow-lg" wire:model.live='fgEmail' placeholder="admin@admin" required>
                             <label for="floatingInput">Email address</label>
                              @error('fgEmail')
                                 <div  class="invalid-feedback" wire:transition>{{ $message }}</div>
                             @enderror
              </div>
-           <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg">Send</button>
+           <button type="submit" class="btn btn-primary w-100 p-2 shadow-lg" @error('fgEmail') disabled  @else  @if(!empty($fgEmail))  @endif @enderror>Send</button>
     </form>
 
     </div>

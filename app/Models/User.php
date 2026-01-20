@@ -45,7 +45,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
+    public function getFirstNameAttribute()
+    {      
+       return explode(' ',$this->name)[0];    
+    }
     
     public function getFormattedCreatedAtAttribute(): string
     {
