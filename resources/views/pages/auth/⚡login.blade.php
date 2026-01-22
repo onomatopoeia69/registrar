@@ -46,8 +46,8 @@ class extends Component
 
         switch ($user->role) {
             case 'registrar':
-                return $this->redirectRoute('registrar.dashboard', navigate:true);
-                // return redirect()->route('registrar.dashboard');
+                // return $this->redirectRoute('registrar.home', navigate:true);
+                return redirect()->route('registrar.home');
             case 'staff':
                 return redirect()->route('staff.dashboard');
             default:

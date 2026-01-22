@@ -36,15 +36,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::middleware(['auth','role:registrar'])->group( function() {
         
-         Route::livewire('registrar/dashboard', 'pages::registrar.dashboard')->name('registrar.dashboard'); 
-
-
-         Route::post('/logout', function (Request $request) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect()->route('registrar.login')->with('message', 'Successfully logged out!');
-        })->name('logout');
+         Route::livewire('registrar/home', 'pages::registrar.home')->name('registrar.home'); 
 
     });
 

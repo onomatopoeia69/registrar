@@ -10,6 +10,7 @@
      role="alert"
      aria-live="assertive"
      aria-atomic="true"
+     data-bs-delay="90000"
      wire:ignore
      >
 

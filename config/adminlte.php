@@ -110,7 +110,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => false,
+        'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
@@ -323,84 +323,110 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+
+        // registrar
+         ['header' => 'Home'],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Dashboard',
+            'url' => 'registrar/home',
+            'icon' => 'fas fa-tachometer-alt',
+            'can' => 'registrar'
+        ],
+        
+        // students management
+
+        ['header' => 'Student Management'],
+        [
+            'text' => 'Students',
+            'can' => 'registrar',
+            'icon' => 'fas fa-user-graduate',
+                'submenu' => [
+                    [
+                        'text' => 'All Students',
+                        'url'  => 'registrar/students',
+                        'icon' => 'fas fa-users',
+                    ],
+                    [
+                        'text' => 'Add Student',
+                        'url'  => 'registrar/students/create',
+                        'icon' => 'fas fa-user-plus',
+                    ],
+                ],
+            
+        ],
+        [ 
+            'text' => 'Courses',
+            'icon' => 'fas fa-book',
+            'can' => 'registrar',
+            'submenu' => [
+                [
+                    'text' => 'Programs',
+                    'url'  => 'registrar/programs',
+                    'icon' => 'fas fa-graduation-cap',
+                ],
+                [
+                    'text' => 'Subjects',
+                    'url'  => 'registrar/subjects',
+                    'icon' => 'fas fa-book-open',
+                ],
+            ],
+        ],
+
+        ['header' => 'Records & Reports'],
+        [
+            'text' => 'Records',
+            'icon' => 'fas fa-file-alt',
+            'can' => 'registrar',
+            'submenu' => [
+                [
+                    'text' => 'Grades',
+                    'url'  => 'registrar/grades',
+                    'icon' => 'fas fa-star',
+                ],
+                [
+                    'text' => 'Transcripts',
+                    'url'  => 'registrar/transcripts',
+                    'icon' => 'fas fa-scroll',
+                ],
+            ],
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
+        'text' => 'Reports',
+        'icon' => 'fas fa-chart-bar',
+        'can' => 'registrar',
+        'submenu' => [
+            [
+                'text' => 'Enrollment Reports',
+                'url'  => 'registrar/reports/enrollment',
+                'icon' => 'fas fa-chart-line',
+            ],
+            [
+                'text' => 'Student Lists',
+                'url'  => 'registrar/reports/students',
+                'icon' => 'fas fa-list',
+            ],
         ],
-        ['header' => 'account_settings'],
+    ],
+
+         ['header' => 'Settings'],
         [
             'text' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-       
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'can' => 'registrar',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'change_password',
+                    'url' => 'admin/settings',
+                    'icon' => 'fas fa-fw fa-lock',
                 ],
             ],
         ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+
+
+        
+        // students 'here'
+      
     ],
 
     /*

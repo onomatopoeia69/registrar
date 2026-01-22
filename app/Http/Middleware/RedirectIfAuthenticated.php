@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
         if ($user) {
             switch ($user->role) {
                 case 'registrar':
-                    return redirect('/registrar/dashboard');
+                    return redirect('/registrar/home');
 
                 case 'staff':
                     return redirect('/staff/dashboard');
