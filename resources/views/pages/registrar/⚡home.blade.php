@@ -60,20 +60,7 @@ class extends Component
         </div>
     </div>
 
-     <div class="row">
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-         <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-    </div>
+     
     </div>
 
 
@@ -82,7 +69,7 @@ class extends Component
     
         <div wire:cloak wire:show="showToast" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
 
-        <x-adminlte-alert id='liveToast' icon="fas fa-user" theme="light" title="System Notification" class="small">
+        <x-adminlte-alert id='liveToast' icon="fas fa-user" title="System Notification" class="small">
             {{session('welcome')}} {{Auth::user()->first_name}}
         </x-adminlte-alert>
 

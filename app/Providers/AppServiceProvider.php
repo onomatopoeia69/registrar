@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app['events']->listen(BuildingMenu::class, function (BuildingMenu $event) {
+            
+            $user = auth()->user();
+            $name = $user->name;
+
+            config([
+                'adminlte.logo' => "<b>{$name}</b>",
+            ]);
+        
+
+
+            
+        });
     }
 }

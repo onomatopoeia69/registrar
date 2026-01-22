@@ -390,23 +390,39 @@ return [
                 ],
             ],
         ],
-        [
-        'text' => 'Reports',
-        'icon' => 'fas fa-chart-bar',
-        'can' => 'registrar',
-        'submenu' => [
             [
-                'text' => 'Enrollment Reports',
-                'url'  => 'registrar/reports/enrollment',
-                'icon' => 'fas fa-chart-line',
-            ],
-            [
-                'text' => 'Student Lists',
-                'url'  => 'registrar/reports/students',
-                'icon' => 'fas fa-list',
+            'text' => 'Reports',
+            'icon' => 'fas fa-chart-bar',
+            'can' => 'registrar',
+            'submenu' => [
+                [
+                    'text' => 'Enrollment Reports',
+                    'url'  => 'registrar/reports/enrollment',
+                    'icon' => 'fas fa-chart-line',
+                ],
+                [
+                    'text' => 'Student Lists',
+                    'url'  => 'registrar/reports/students',
+                    'icon' => 'fas fa-list',
+                ],
             ],
         ],
-    ],
+          ['header' => 'Tools'],
+        [
+            'text' => 'OCR',
+            'url' => 'admin/settings',
+            'icon' => 'fas bi bi-robot',
+            'can' => 'registrar',
+      
+
+        ],
+        [ 
+            'text' => 'Notes',
+            'url' => 'admin/settings',
+            'icon' => 'fas bi bi-journal-bookmark',
+            'can' => 'registrar',
+            
+        ],
 
          ['header' => 'Settings'],
         [
@@ -420,9 +436,15 @@ return [
                     'url' => 'admin/settings',
                     'icon' => 'fas fa-fw fa-lock',
                 ],
+                [
+                    'text' => 'System Information',
+                    'url' => 'admin/settings',
+                    'icon' => 'fas bi bi-info-circle',
+                ],
             ],
         ],
 
+      
 
         
         // students 'here'
