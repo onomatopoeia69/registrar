@@ -23,48 +23,39 @@ class extends Component
 ?>
 
 <div >
+<section id="box-info" class="container-fluid pt-4">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title text-bold">Dashboard Overview</h3>
+        </div>
 
-    <section id="box-info" class="container-fluid pt-4">
+        <div class="card-body">
+            <div class="row">
+                
+                <div class="col-lg-4 col-6">
+                    <x-adminlte-small-box title="0" text="Total Users" 
+                        icon="fas fa-users text-dark" theme="teal" 
+                        url="#" url-text="View details"/>
+                </div>
 
-    <h1>DASHBOARD</h1>
+                <div class="col-lg-4 col-6">
+                    <x-adminlte-small-box title="0" text="Page Views" 
+                        icon="fas fa-eye text-dark" theme="info" 
+                        url="#" url-text="View details"/>
+                </div>
 
-    <div class="container">
-    <div class="row">
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-         <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        
-    </div>
-
-     <div class="row">
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-        <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
-        </div>
-        <div class="col-sm">
-         <x-adminlte-small-box title="424" text="Views" icon="fas fa-eye text-dark"
-            theme="teal" url="#" url-text="View details"/>
+                <div class="col-lg-4 col-6">
+                    <x-adminlte-small-box title="0" text="Revenue" 
+                        icon="fas fa-shopping-cart text-dark" theme="success" 
+                        url="#" url-text="View details"/>
+                </div>
+            </div>
+            
+            <div class="row">
+                </div>
         </div>
     </div>
-
-     
-    </div>
-
-
-    </section>
+</section>
 
     
         <div wire:cloak wire:show="showToast" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
