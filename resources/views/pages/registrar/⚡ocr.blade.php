@@ -40,6 +40,7 @@ new
 
         if (isset($data['ParsedResults'][0]['ParsedText'])) {
             $this->resultText = $data['ParsedResults'][0]['ParsedText'];
+            $this->reset('file');
         } else {
             session()->flash('error', $data['ErrorMessage'][0] ?? 'OCR Failed to read text.');
         }
@@ -123,6 +124,5 @@ new
         $('#liveToast').toast('show');
     });
     
-
 
 </script>

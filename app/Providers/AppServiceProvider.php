@@ -24,14 +24,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app['events']->listen(BuildingMenu::class, function (BuildingMenu $event) {
             
             $user = auth()->user();
-            $name = $user->name;
 
             config([
-                'adminlte.logo' => "<b>{$name}</b>",
+                'adminlte.logo' => "<b> Registrar System </b>",
             ]);
         
-
-
             
         });
     }
