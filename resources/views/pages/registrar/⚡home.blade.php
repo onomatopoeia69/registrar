@@ -26,7 +26,7 @@ class extends Component
 <section id="box-info" class="container-fluid pt-4">
     <div class="card shadow-sm">
         <div class="card-header">
-            <h3 class="card-title text-bold">Dashboard Overview</h3>
+            <h3 class="card-title text-bold fs-3">Dashboard Overview</h3>
         </div>
 
         <div class="card-body">
@@ -58,13 +58,10 @@ class extends Component
 </section>
 
     
-        <div wire:cloak wire:show="showToast" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
-
-        <x-adminlte-alert id='liveToast' icon="fas fa-user" title="System Notification" class="small">
-            {{session('welcome')}} {{Auth::user()->first_name}}
-        </x-adminlte-alert>
-
-        </div>
+     
+        @if(session('welcome'))
+        <x-toast id="liveToast" color="primary">{{ session('welcome') }}  {{ Auth::user()->name }}</x-toast>
+        @endif
 
         
 </div>
@@ -72,21 +69,21 @@ class extends Component
 
 <script>
 
-        var liveToast = document.getElementById('liveToast');
+        // var liveToast = document.getElementById('liveToast');
 
-        function startShow()
-        {
-            if (liveToast) {
-                new bootstrap.Toast(liveToast).show();
-            }
-        }
+        // function startShow()
+        // {
+        //     if (liveToast) {
+        //         new bootstrap.Toast(liveToast).show();
+        //     }
+        // }
 
         setTimeout(() => {
-            startShow();
+           $('#liveToast').toast('show');
         }, 5000);
 
   
-
+        
                 
       
 

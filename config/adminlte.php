@@ -309,11 +309,6 @@ return [
             'topnav_right' => true,     // Or "topnav => true" to place on the left.
         ],
         [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],

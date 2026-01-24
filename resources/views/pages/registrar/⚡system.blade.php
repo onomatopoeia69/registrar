@@ -22,7 +22,7 @@ new
     <div class="card">
 
     <div class="card-header">
-        <h1 class="card-title text-bold">System Information</h1>
+        <h1 class="card-title text-bold fs-3">System Information</h1>
     </div>
 
     <div class="card-body p-0">
