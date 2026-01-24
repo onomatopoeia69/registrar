@@ -4,7 +4,6 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 new
@@ -70,7 +69,6 @@ new
                  <div class="invalid-feedback" wire:transition>{{ $message }}</div>
             @enderror
             <button type="submit" class="btn btn-primary mt-2 w-100" @disabled(!$file || $errors->has('file'))>Scan</button>
-           
             </form>
      </div>
 

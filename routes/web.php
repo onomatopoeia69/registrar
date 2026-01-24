@@ -37,8 +37,14 @@ use Illuminate\Support\Facades\Route;
     Route::middleware(['auth','role:registrar'])->group( function() {
         
          Route::livewire('registrar/home', 'pages::registrar.home')->name('registrar.home'); 
-         Route::livewire('registrar/settings/info', 'pages::registrar.system')->name('registrar.system'); 
-         Route::livewire('registrar/tools/ocr', 'pages::registrar.ocr')->name('registrar.ocr'); 
+
+         //settings
+         Route::livewire('registrar/settings/info', 'pages::registrar.settings.system')->name('registrar.settings.system'); 
+
+         // tools 
+         Route::livewire('registrar/tools/ocr', 'pages::registrar.tools.ocr')->name('registrar.tools.ocr'); 
+         Route::livewire('registrar/tools/notes','pages::registrar.tools.notes')->name('registrar.tools.notes');
+
 
     });
 

@@ -412,7 +412,7 @@ return [
         ],
         [ 
             'text' => 'Notes',
-            'url' => 'admin/settings',
+            'url' => 'registrar/tools/notes',
             'icon' => 'fas bi bi-journal-bookmark',
             'can' => 'registrar',
             
