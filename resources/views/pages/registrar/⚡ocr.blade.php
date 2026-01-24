@@ -18,7 +18,7 @@ new
     #[Validate('image|max:5120|mimes:jpg,jpeg,png|required|file')] 
     public $file;
 
-    public $resultText;
+    public $resultText = null;
 
     public $test= false;
 
@@ -64,7 +64,7 @@ new
 
     <div class="mb-3 p-4">
             <form action="" wire:submit.prevent='scan'>
-            <label for="formFile" class="form-label">Input File</label>
+            <label for="formFile" class="form-label">Input Image File: </label>
             <input class="form-control @error('file') is-invalid @enderror" type="file" id="formFile" wire:model='file'>
             @error('file')
                  <div class="invalid-feedback" wire:transition>{{ $message }}</div>
@@ -82,20 +82,19 @@ new
    <div class="card">
     <div class="card-header">
         <h1 class="card-title text-bold fs-3">Results</h1>
-        @if($resultText)
-            <div class="card-tools">
+       
+            <div class="card-tools @if(!$resultText) d-none @endif" >
                 <button type="button" class="btn btn-sm btn-default" id='copyText'">
                     <i class="fas fa-copy"></i> Copy Text
                 </button>
             </div>
-        @endif
     </div>
 
     <div class="card-body">
-        @if($resultText)
-            <pre id="ocrResult" style="white-space: pre-wrap; font-family: inherit; background: #f8f9fa; padding: 15px; border: 1px solid #ddd;">{{ $resultText }}</pre>
-        @else   
-            <div class="text-center p-4">
+       
+            <pre id="ocrResult" class="@if(!$resultText) d-none @endif"" style="white-space: pre-wrap; font-family: inherit; background: #f8f9fa; padding: 15px; border: 1px solid #ddd;">{{ $resultText }}</pre>
+      
+            <div class="text-center p-4 @if($resultText) d-none @endif"">
                 @if(session()->has('error'))
                     <div class="alert alert-danger">
                         <i class="icon fas fa-ban"></i> {{ session('error') }}
@@ -103,18 +102,13 @@ new
                 @endif
                 <span class="text-muted"><i class="fas fa-file-import fa-2x mb-2"></i><br>No Result to display</span>
             </div>
-        @endif
     </div>
 </div>
   
-
-
     </section>  
 
-    
-    <x-toast id="liveToast">Copied</x-toast>
 
-
+    <x-toast id="liveToast">Copied!</x-toast>
 
 </div>
 
@@ -122,11 +116,11 @@ new
 
     let copyTextBtn = document.querySelector('#copyText');
     let icon = copyTextBtn.querySelector('i');
+    let result  = document.querySelector('#ocrResult');
    
 
     copyTextBtn.addEventListener('click', () => {
-
-        // navigator.clipboard.writeText(result.textContent);
+        navigator.clipboard.writeText(result.textContent);
         icon.classList.replace('fa-copy','bi-clipboard-check-fill');
         $('#liveToast').toast('show');
     });
