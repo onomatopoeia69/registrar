@@ -10,18 +10,15 @@ new
 #[Layout('layouts.registrar.dashboard')]
 #[Title('Registrar')]
  class extends Component
-{   
-
-    use WithFileUploads;
+{
+     use WithFileUploads;
 
     #[Validate('image|max:5120|mimes:jpg,jpeg,png|required|file')] 
     public $file;
 
     public $resultText = null;
 
-    public $test= false;
-
-    public function scan()
+     public function scan()
     {
         $this->validate();
 
@@ -48,7 +45,6 @@ new
     }
 
 
-    
 };
 ?>
 
@@ -111,6 +107,7 @@ new
 
 </div>
 
+@script
 <script>
 
     let copyTextBtn = document.querySelector('#copyText');
@@ -126,3 +123,4 @@ new
     
 
 </script>
+@endscript

@@ -66,27 +66,13 @@ class extends Component
         
 </div>
 
-
+@script
 <script>
-
-        // var liveToast = document.getElementById('liveToast');
-
-        // function startShow()
-        // {
-        //     if (liveToast) {
-        //         new bootstrap.Toast(liveToast).show();
-        //     }
-        // }
 
         setTimeout(() => {
            $('#liveToast').toast('show');
         }, 5000);
 
-  
-        
-                
-      
-
-
 
 </script>
+@endscript

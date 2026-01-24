@@ -403,9 +403,9 @@ return [
             ],
         ],
           ['header' => 'Tools'],
-        [
-            'text' => 'OCR',
-            'url' => 'registrar/tools/ocr',
+         [
+            'text' => 'Image-to-text',
+            'url' => 'registrar/tools/recog',
             'icon' => 'fas bi bi-robot',
             'can' => 'registrar',
 

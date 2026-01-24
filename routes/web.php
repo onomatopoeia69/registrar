@@ -42,8 +42,8 @@ use Illuminate\Support\Facades\Route;
          Route::livewire('registrar/settings/info', 'pages::registrar.settings.system')->name('registrar.system'); 
          
           // tools
-         Route::livewire('registrar/tools/notes', 'pages::registrar.tools.notes')->name('registrar.tools.ocr'); 
-         Route::livewire('registrar/tools/ocr', 'pages::registrar.ocr')->name('registrar.ocr'); 
+         Route::livewire('registrar/tools/notes', 'pages::registrar.tools.notes')->name('registrar.tools.notes'); 
+         Route::livewire('registrar/tools/recog', 'pages::registrar.tools.recog')->name('registrar.tools.recog');  
 
     });
 
