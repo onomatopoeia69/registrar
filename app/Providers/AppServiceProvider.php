@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
 
             config([
                 'adminlte.logo' => "<b> Registrar System </b>",
+                'adminlte.logo_img' =>  $user->profile
+                        ? asset('images/'.$user->profile) 
+                        : asset('images/default.png'),
+                        
             ]);
         
             
