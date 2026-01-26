@@ -317,12 +317,14 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
+            'id' => 'search'
         ],
 
         // registrar
          ['header' => 'Home'],
         [
             'text' => 'Dashboard',
+            'id' => 'dashboard',
             'url' => 'registrar/home',
             'icon' => 'fas fa-tachometer-alt',
             'can' => 'registrar'
@@ -405,6 +407,7 @@ return [
           ['header' => 'Tools'],
          [
             'text' => 'Image-to-text',
+            'id' => 'ocr',
             'url' => 'registrar/tools/recog',
             'icon' => 'fas bi bi-robot',
             'can' => 'registrar',
@@ -421,6 +424,7 @@ return [
          ['header' => 'Settings'],
         [
             'text' => 'profile',
+            'id' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
             'can' => 'registrar',

@@ -46,7 +46,7 @@ class extends Component
 
                 <div class="col-lg-4 col-6">
                     <x-adminlte-small-box title="0" text="Subjects Offered" 
-                        icon="fas bi-book-fill text-dark" theme="danger" 
+                        icon="fas bi-journal-bookmark-fill" theme="danger" 
                         url="#" url-text="View details"/>
                 </div>
                 <div class="col-lg-4 col-6">
@@ -81,8 +81,6 @@ class extends Component
     </div>
 </section>
 
-    
-
         @if(session('welcome'))
         <x-toast id="liveToast" color="primary">{{ session('welcome') }}  {{ Auth::user()->name }}</x-toast>
         @endif
@@ -93,9 +91,16 @@ class extends Component
 @script
 <script>
 
-        setTimeout(() => {
+       
+        window.addEventListener("load", () => {
+
+         setTimeout(() => {
+            introDriver();
            $('#liveToast').toast('show');
         }, 5000);
+
+            
+        });
 
 
     const ctx = document.getElementById('studentsChart');
@@ -121,6 +126,35 @@ class extends Component
         }
     });
 
+
+    function introDriver()
+    {
+
+        const driver = window.driver.js.driver;
+
+
+        const driverObj = driver({
+        
+        showProgress: true,
+        allowClose: false,
+
+        steps: [
+            { element: '#fullscreen', popover: { title: 'Full Screen Mode', description: 'Use to widen the window for more clear view.' } },
+            { element: '#dark', popover: { title: 'Dark/Light Mode', description: 'Use to darken or lighten the background color or view.' } },
+            { element: '#search', popover: { title: 'Search', description: 'Search tool for the certain sections or pages below.' } },
+            { element: '#dashboard', popover: { title: 'Dashboard', description: 'This is dashboard for all general informations.' } },
+            { element: '#ocr', popover: { title: 'Image to Text converter', description: 'An ocr that uses ai to convert image to text information.' } },
+            { element: '#profile', popover: { title: 'Profile', description: 'This section helps user to know and change their information' } },
+            { popover: { title: "Welcome Aboard!", description: 'You may proceed. Please go ahead and try using the system.' } }
+        ]
+        });
+
+        driverObj.drive();
+
+    }
+
+  
+    
 
 
 </script>
