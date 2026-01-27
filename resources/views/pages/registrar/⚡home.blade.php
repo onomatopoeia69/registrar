@@ -22,8 +22,9 @@ class extends Component
 };
 ?>
 
-<div >
-<section id="box-info" class="container-fluid pt-4">
+<div>
+
+<section id="box-info1" class="container-fluid pt-4">
 
     <div class="card shadow-sm">
         <div class="card-header">
@@ -63,7 +64,7 @@ class extends Component
 </section>
 
 
-<section id="box-info" class="container-fluid pt-4">
+<section id="box-info2" class="container-fluid pt-4">
     <div class="card shadow-sm">
         <div class="card-header">
             <h3 class="card-title text-bold fs-3">Charts Reports</h3>

@@ -340,7 +340,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'All Students',
-                        'url'  => 'registrar/students',
+                        'url'  => 'registrar/manage/students',
                         'icon' => 'fas fa-users',
                     ],
                     [
