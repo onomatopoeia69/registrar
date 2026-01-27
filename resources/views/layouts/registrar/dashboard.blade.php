@@ -18,9 +18,10 @@
         @extends('adminlte::page')
 
         @section('preloader')
-            <i class="fas fa-4x fa-spin fa-spinner text-secondary"></i>
-            <h4 class="mt-4 text-dark">Loading</h4>
-        @stop
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+         @stop
 
         @section('content')
 

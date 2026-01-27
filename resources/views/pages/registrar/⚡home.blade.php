@@ -24,6 +24,7 @@ class extends Component
 
 <div >
 <section id="box-info" class="container-fluid pt-4">
+
     <div class="card shadow-sm">
         <div class="card-header">
             <h3 class="card-title text-bold fs-3">Dashboard Overview</h3>
@@ -91,15 +92,21 @@ class extends Component
 @script
 <script>
 
-       
+
         window.addEventListener("load", () => {
 
+
          setTimeout(() => {
-            introDriver();
+
+            if(!localStorage.getItem('isDoneTutorial'))
+            {
+                introDriver();
+            }
+
            $('#liveToast').toast('show');
+
         }, 5000);
 
-            
         });
 
 
@@ -132,11 +139,13 @@ class extends Component
 
         const driver = window.driver.js.driver;
 
+        localStorage.setItem('isDoneTutorial',true);
 
         const driverObj = driver({
         
         showProgress: true,
         allowClose: false,
+
 
         steps: [
             { element: '#fullscreen', popover: { title: 'Full Screen Mode', description: 'Use to widen the window for more clear view.' } },
@@ -148,6 +157,8 @@ class extends Component
             { popover: { title: "Welcome Aboard!", description: 'You may proceed. Please go ahead and try using the system.' } }
         ]
         });
+
+        
 
         driverObj.drive();
 
