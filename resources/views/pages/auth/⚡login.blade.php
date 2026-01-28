@@ -26,6 +26,7 @@ class extends Component
         $credentials = [
             'email' => $this->email,
             'password' => $this->password,
+            'account_status' => 'active'
         ];
 
         if (!Auth::attempt($credentials)) {
@@ -41,8 +42,6 @@ class extends Component
 
 
         session()->flash('welcome', 'Welcome back!');
-        session()->flash( 'time', now()->diffForHumans());
-        
 
         switch ($user->role) {
             case 'registrar':
