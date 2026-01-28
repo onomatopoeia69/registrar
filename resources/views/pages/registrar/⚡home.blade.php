@@ -1,6 +1,8 @@
 <?php
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use App\Models\Student;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new 
@@ -8,14 +10,13 @@ new
 #[Title('Registrar')]
 class extends Component
 {
-        
-    public bool $showToast = false;
-
-    public function mount()
+ 
+    #[Computed]
+    public function activeStudentCount()
     {
-        if (session()->has('welcome')) {
-            $this->showToast = true;
-        }
+
+        return Student::where('academic_status','active')->count();
+
     }
 
 
@@ -33,12 +34,14 @@ class extends Component
 
         <div class="card-body">
             <div class="row">
-                
-                <div class="col-lg-4 col-6">
-                    <x-adminlte-small-box title="0" text="Enrolled Students" 
+
+                @island()
+                <div class="col-lg-4 col-6" wire:poll>
+                    <x-adminlte-small-box title="{{ $this->activeStudentCount ?? 0 }}" text="Enrolled Students" 
                         icon="fas fa-users text-dark" theme="teal" 
-                        url="#" url-text="View details"/>
+                        url="{{ route('registrar.students.all') }}" url-text="View details"/>
                 </div>
+                @endisland
 
                 <div class="col-lg-4 col-6">
                     <x-adminlte-small-box title="0" text="New Enrollees" 
