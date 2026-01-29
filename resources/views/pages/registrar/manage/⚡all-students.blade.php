@@ -31,6 +31,15 @@ class extends Component
         }, 'student_list.pdf');
     }
 
+    public function reloadPage()
+    {
+
+        $this->dispatch('reload-page');
+
+        
+
+    }
+
     
 };
 ?>
@@ -46,25 +55,38 @@ class extends Component
 
     <div class="mt-2 card-body p-2"> 
 
+        <div class="d-flex justify-content-between">
+
+            {{-- for the page refresh --}}
+        <div class="mb-4 p-2">
+            <button type="button" wire:click='reloadPage' class="btn btn-primary btn-sm">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+            </button>
+        </div>
+
+
             {{-- for the imports file --}}
-        <div class="mb-3 p-2 d-flex align-items-center gap-2">
-              <span class="text-bold">Import to:</span>
-       
-              <button type="button" class="btn btn-danger" wire:click='download'>
+        <div class="mb-4 p-2 d-flex align-items-center gap-2">
+
+              <button type="button" class="btn btn-danger btn-sm" wire:click='download'>
                  <i class="fas bi-file-earmark-pdf-fill"></i>
                   PDF
               </button>
       
-             <button type="button" class="btn btn-success">
+             <button type="button" class="btn btn-success btn-sm">
                  <i class="fas bi-file-earmark-excel-fill"></i>
                  Excel
              </button>
 
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary btn-sm">
                   <i class="fas bi-filetype-csv"></i>
                   CSV
               </button>
         </div>
+     </div>
+        
+
     
     <div wire:ignore>
       <x-adminlte-datatable id="table1" class='p-4' :heads="['No.','Student ID', 'First Name', 'Last Name', 'Actions']"  head-theme="light"
@@ -77,21 +99,18 @@ class extends Component
                     <td>{{ $student->first_name }}</td>
                     <td>{{ $student->last_name }}</td>
                     <td class="d-flex align-items-center gap-2">
-                    <div>
-                        <button type="button" class="btn btn-primary">
-                          Edit
+                         <button type="button" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> View
                         </button>
-                    </div>
-                     <div>
-                        <button type="button" class="btn btn-success">
-                           View Info
+                        <button type="button" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
                         </button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-danger">
-                          Set Inactive
+                        <button type="button" class="btn btn-danger btn-sm">
+                            <i class="fas fa-user-slash"></i> Set Inactive
                         </button>
-                    </div>
+                        <button type="button" class="btn btn-info btn-sm">
+                            <i class="fas fa-key"></i> Reset Password
+                        </button>
                     </td>
                 </tr>
             
@@ -104,9 +123,7 @@ class extends Component
                 </tr>
 
             @endforelse
-            
-          
-      
+
     </x-adminlte-datatable>
      </div>
  
@@ -116,3 +133,13 @@ class extends Component
     </section>
 
 </div>
+
+@script
+<script>
+
+    Livewire.on('reload-page', () => {
+        location.reload();
+    });
+
+</script>
+@endscript
