@@ -24,7 +24,7 @@ class extends Component
 
         $students = Student::where('academic_status','active')->get();
 
-        $pdf = Pdf::loadView('templates.pdf.test',compact('students'));
+        $pdf = Pdf::loadView('templates.pdf.allStudent',compact('students'));
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();

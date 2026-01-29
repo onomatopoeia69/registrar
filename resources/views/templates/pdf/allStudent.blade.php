@@ -21,15 +21,17 @@
 
 <table width="100%">
     <tr>
-        <td width="20%" >
+        <td width="15%" >
             <img src="{{ public_path('images/bestlink.png') }}" height="60">
         </td>
-        <td width="60%" align="center">
+        <td width="70%" align="center">
             <strong style="font-size:16px;">
-                BESTLINK COLLEGE OF THE PHILIPPINES
+                Bestlink College of the Philippines - Bulacan Inc.
             </strong>
+            <span style="display: block; text-align: center; font-size:12px;">Lot 1 Ipo Road, Minuyan Proper, City of San Jose Del Monte, Bulacan</span>
+            <span style="display: block; text-align: center; font-size:11px;">(044) 797-2949</span>
         </td>
-        <td width="20%" align="right">
+        <td width="15%" align="right">
             <img src="{{ public_path('images/ched.png') }}" height="60">
         </td>
     </tr>
