@@ -4,6 +4,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use App\Models\Student;
 use Livewire\Attributes\Computed;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
 
 new 
@@ -16,6 +17,18 @@ class extends Component
     public function activeStudents()
     {
          return Student::where('academic_status', 'active')->get();
+    }
+
+     public function download()
+    {           
+
+        $students = Student::where('academic_status','active')->get();
+
+        $pdf = Pdf::loadView('templates.pdf.test',compact('students'));
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'student_list.pdf');
     }
 
     
@@ -31,13 +44,13 @@ class extends Component
         <h1 class="card-title text-bold fs-3">All Students</h1>
     </div>
 
-    <div class="card-body p-2"> 
+    <div class="mt-2 card-body p-2"> 
 
             {{-- for the imports file --}}
         <div class="mb-3 p-2 d-flex align-items-center gap-2">
               <span class="text-bold">Import to:</span>
        
-              <button type="button" class="btn btn-danger">
+              <button type="button" class="btn btn-danger" wire:click='download'>
                  <i class="fas bi-file-earmark-pdf-fill"></i>
                   PDF
               </button>
@@ -52,8 +65,8 @@ class extends Component
                   CSV
               </button>
         </div>
-       
-
+    
+    <div wire:ignore>
       <x-adminlte-datatable id="table1" class='p-4' :heads="['No.','Student ID', 'First Name', 'Last Name', 'Actions']"  head-theme="light"
       >     
         @php $i = 1; @endphp
@@ -95,6 +108,8 @@ class extends Component
           
       
     </x-adminlte-datatable>
+     </div>
+ 
     </div>
     </div>
 
