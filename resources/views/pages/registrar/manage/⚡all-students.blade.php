@@ -5,6 +5,8 @@ use Livewire\Attributes\Title;
 use App\Models\Student;
 use Livewire\Attributes\Computed;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\StudentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Livewire\Component;
 
 new 
@@ -19,7 +21,7 @@ class extends Component
          return Student::where('academic_status', 'active')->get();
     }
 
-     public function download()
+     public function downloadAsPdf()
     {           
 
         $students = Student::where('academic_status','active')->get();
@@ -31,12 +33,19 @@ class extends Component
         }, 'student_list.pdf');
     }
 
+    public function downloadAsExcel()
+    {
+        return Excel::download(new StudentsExport, 'students.xlsx');
+    }
+
+    public function downloadAsCsv(){
+        return Excel::download(new StudentsExport, 'students.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
+
     public function reloadPage()
     {
-
-        $this->dispatch('reload-page');
-
         
+        $this->dispatch('reload-page');
 
     }
 
@@ -69,17 +78,17 @@ class extends Component
             {{-- for the imports file --}}
         <div class="mb-4 p-2 d-flex align-items-center gap-2">
 
-              <button type="button" class="btn btn-danger btn-sm" wire:click='download'>
+              <button type="button" class="btn btn-danger btn-sm" wire:click='downloadAsPdf'>
                  <i class="fas bi-file-earmark-pdf-fill"></i>
                   PDF
               </button>
       
-             <button type="button" class="btn btn-success btn-sm">
+             <button type="button" class="btn btn-success btn-sm" wire:click='downloadAsExcel'>
                  <i class="fas bi-file-earmark-excel-fill"></i>
                  Excel
              </button>
 
-              <button type="button" class="btn btn-primary btn-sm">
+              <button type="button" class="btn btn-primary btn-sm" wire:click='downloadAsCsv'>
                   <i class="fas bi-filetype-csv"></i>
                   CSV
               </button>
