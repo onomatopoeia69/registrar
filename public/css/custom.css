@@ -1,0 +1,21 @@
+
+.dark-mode .table {
+    color: #dee2e6;
+    background-color: transparent;
+}
+
+.dark-mode .table th,
+.dark-mode .table td {
+    background-color: #343a40;
+    border-color: #454d55;
+    color:#ffffff;
+}
+
+.dark-mode .table thead th {
+    background-color: #3c444d;
+    color: #ffffff;
+}
+
+.dark-mode .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}

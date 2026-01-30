@@ -7,6 +7,7 @@ use Livewire\Attributes\Computed;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\StudentsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 new 
@@ -14,40 +15,81 @@ new
 #[Title('Registrar')]
 class extends Component
 {
+    use WithPagination;
+
+    public $search = '';
+    public $status = '';
+
+
+     public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+     public function updatedStatus()
+    {
+        $this->resetPage();
+    }
 
     #[Computed]
-    public function activeStudents()
+    public function students()
     {
-         return Student::where('academic_status', 'active')->get();
+        return Student::query()
+            ->when($this->search, function ($q) {
+                    $q->where(function ($query) {
+                        $query->where('first_name', 'like', "%{$this->search}%")
+                            ->orWhere('last_name', 'like', "%{$this->search}%")
+                            ->orWhere('student_number', 'like', "%{$this->search}%")
+                            ->orWhere('course', 'like', "%{$this->search}%");
+                    });
+                })
+            ->when($this->status, fn($q) => $q->where('academic_status', $this->status))
+            ->paginate(10);
     }
+
 
      public function downloadAsPdf()
     {           
+        $students = Student::query()
+        ->when($this->search, function ($q) {
+            $q->where(function ($query) {
+                $query->where('first_name', 'like', "%{$this->search}%")
+                      ->orWhere('last_name', 'like', "%{$this->search}%")
+                      ->orWhere('student_number', 'like', "%{$this->search}%")
+                      ->orWhere('course', 'like', "%{$this->search}%");
+                });
+            })
+            ->when($this->status, fn($q) => $q->where('academic_status', $this->status))
+            ->get(); 
 
-        $students = Student::where('academic_status','active')->get();
+        $data = ucFirst($this->status);
 
-        $pdf = Pdf::loadView('templates.pdf.allStudent',compact('students'));
+        $pdf = PDF::loadView('templates.pdf.allStudent', [
+            'students' => $students,
+            'data' => $data
+        ]);
 
-        return response()->streamDownload(function () use ($pdf) {
+         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
         }, 'student_list.pdf');
+
+
     }
 
     public function downloadAsExcel()
     {
-        return Excel::download(new StudentsExport, 'students.xlsx');
+        return Excel::download(new StudentsExport($this->search, $this->status), 'students.xlsx');
     }
 
     public function downloadAsCsv(){
-        return Excel::download(new StudentsExport, 'students.csv', \Maatwebsite\Excel\Excel::CSV);
+        return Excel::download(
+        new StudentsExport($this->search, $this->status), 
+        'students_report.csv', 
+        \Maatwebsite\Excel\Excel::CSV
+        );
     }
 
-    public function reloadPage()
-    {
-        
-        $this->dispatch('reload-page');
-
-    }
+   
 
     
 };
@@ -64,19 +106,8 @@ class extends Component
 
     <div class="mt-2 card-body p-2"> 
 
-        <div class="d-flex justify-content-between">
-
-            {{-- for the page refresh --}}
-        <div class="mb-4 p-2">
-            <button type="button" wire:click='reloadPage' class="btn btn-primary btn-sm">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh
-            </button>
-        </div>
-
-
             {{-- for the imports file --}}
-        <div class="mb-4 p-2 d-flex align-items-center gap-2">
+        <div class="mb-4 p-2 d-flex align-items-center justify-content-start gap-2">
 
               <button type="button" class="btn btn-danger btn-sm" wire:click='downloadAsPdf'>
                  <i class="fas bi-file-earmark-pdf-fill"></i>
@@ -94,49 +125,57 @@ class extends Component
               </button>
         </div>
      </div>
+
+        <div class="input-group mb-3" >
+            <select class="form-select col-2" wire:model.live="status">
+                <option value="">All</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="graduated">Graduated</option>
+            </select>
+
+            <input type="text"
+                class="form-control"
+                placeholder="Search..." wire:model.live='search'>
+
+        </div>
+
+        @island
+        <div wire:poll>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>    
+                <th scope="col">Student No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Course</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+             @foreach($this->students as $key => $student)
+                <tr>
+                    <td>{{ $student->student_number }}</td>
+                    <td>{{ $student->last_name }} {{ $student->first_name }}</td>
+                    <td>{{ $student->course }}</td>
+                    <td>{{ ucFirst($student->academic_status) }}</td>
+                    <td>..</td>
+                </tr>
+            @endforeach
+            </tbody>
+         </table>
+         </div>
         
 
-    
-    <div wire:ignore>
-      <x-adminlte-datatable id="table1" class='p-4' :heads="['No.','Student ID', 'First Name', 'Last Name', 'Actions']"  head-theme="light"
-      >     
-        @php $i = 1; @endphp
-        @forelse ($this->activeStudents as $student)
-                <tr wire:key="student-{{ $student->student_number }}">
-                    <td>{{ $i++ }}</td>
-                    <td>{{ $student->student_number }}</td>
-                    <td>{{ $student->first_name }}</td>
-                    <td>{{ $student->last_name }}</td>
-                    <td class="d-flex align-items-center gap-2">
-                         <button type="button" class="btn btn-primary btn-sm">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                        <button type="button" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm">
-                            <i class="fas fa-user-slash"></i> Set Inactive
-                        </button>
-                        <button type="button" class="btn btn-info btn-sm">
-                            <i class="fas fa-key"></i> Reset Password
-                        </button>
-                    </td>
-                </tr>
+         <div class="mt-4">
+            {{ $this->students->links() }}
+        </div>
+                
+         @endisland
+
             
-            @empty
-
-                <tr>
-                    <td colspan="5" class="text-center text-muted">
-                        No active students found
-                    </td>
-                </tr>
-
-            @endforelse
-
-    </x-adminlte-datatable>
-     </div>
- 
-    </div>
+        </div>
     </div>
 
     </section>

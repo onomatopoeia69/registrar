@@ -23,8 +23,9 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'student_number' => $this->faker->unique()->numerify('2025-####'),
+            'student_number' => $this->faker->unique()->numerify('####'),
             'first_name'     => $this->faker->firstName(),
+            'middle_name'      => $this->faker->lastName(),
             'last_name'      => $this->faker->lastName(),
             'gender'         => $this->faker->randomElement(['male', 'female']),
             'course'         => 'BSIT',
