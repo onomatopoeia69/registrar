@@ -344,16 +344,6 @@ return [
                         'icon' => 'fas fa-users',
                     ],
                     [
-                        'text' => 'Graduate Students',
-                        'url'  => 'registrar/students/create',
-                        'icon' => 'fas fa-user-graduate',
-                    ],
-                    [
-                        'text' => 'Inactive Students',
-                        'url'  => 'registrar/students/create',
-                        'icon' => 'fas fa-user-slash',
-                    ],
-                    [
                         'text' => 'Add Student',
                         'url'  => 'registrar/students/create',
                         'icon' => 'fas fa-user-plus',

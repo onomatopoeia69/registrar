@@ -19,6 +19,7 @@ class extends Component
 
     public $search = '';
     public $status = '';
+    public $pager = "10";
 
 
      public function updatedSearch()
@@ -44,7 +45,7 @@ class extends Component
                     });
                 })
             ->when($this->status, fn($q) => $q->where('academic_status', $this->status))
-            ->paginate(10);
+            ->paginate($this->pager);
     }
 
 
@@ -106,25 +107,42 @@ class extends Component
 
     <div class="mt-2 card-body p-2"> 
 
+
+     <div class="d-flex justify-content-between align-items-center">
+
+            {{-- for the page refresh --}}
+        <div class="input-group mb-4" >
+            <label class="input-group-text" for="perPageSelect">Per Page:</label>
+            <select class="form-select col-2" wire:model.live="pager">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                </select>
+            </div>
+
+
             {{-- for the imports file --}}
-        <div class="mb-4 p-2 d-flex align-items-center justify-content-start gap-2">
+        <div class="mb-4 p-2 d-flex align-items-center gap-2">
 
               <button type="button" class="btn btn-danger btn-sm" wire:click='downloadAsPdf'>
                  <i class="fas bi-file-earmark-pdf-fill"></i>
                   PDF
               </button>
-      
+
+            
              <button type="button" class="btn btn-success btn-sm" wire:click='downloadAsExcel'>
                  <i class="fas bi-file-earmark-excel-fill"></i>
                  Excel
              </button>
 
+            
               <button type="button" class="btn btn-primary btn-sm" wire:click='downloadAsCsv'>
                   <i class="fas bi-filetype-csv"></i>
                   CSV
               </button>
         </div>
-     </div>
+        </div>
 
         <div class="input-group mb-3" >
             <select class="form-select col-2" wire:model.live="status">
@@ -175,7 +193,7 @@ class extends Component
          @endisland
 
             
-        </div>
+    </div>
     </div>
 
     </section>
