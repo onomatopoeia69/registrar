@@ -65,6 +65,8 @@ class extends Component
 
         $data = ucFirst($this->status);
 
+        $fileName = $data ? strtolower($data)."_student_list.pdf" : "student_list.pdf";
+
         $pdf = PDF::loadView('templates.pdf.allStudent', [
             'students' => $students,
             'data' => $data
@@ -72,7 +74,7 @@ class extends Component
 
          return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
-        }, 'student_list.pdf');
+        }, $fileName);
 
 
     }
@@ -172,7 +174,7 @@ class extends Component
             </thead>
             <tbody>
     
-             @foreach($this->students as $key => $student)
+             @forelse($this->students as $key => $student)
                 <tr>
                     <td>{{ $student->student_number }}</td>
                     <td>{{ $student->last_name }} {{ $student->first_name }}</td>
@@ -180,7 +182,13 @@ class extends Component
                     <td>{{ ucFirst($student->academic_status) }}</td>
                     <td>..</td>
                 </tr>
-            @endforeach
+                @empty
+
+                <tr>
+                    <td colspan='5' class="text-center fw-light">NO RESULT FOUND</td>
+                </tr>
+
+            @endforelse
             </tbody>
          </table>
          </div>
