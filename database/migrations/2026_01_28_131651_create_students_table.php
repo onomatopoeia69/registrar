@@ -19,19 +19,19 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('birth_date')->nullable();
 
-            // Academic info
+            
             $table->string('course')->nullable();
             $table->year('year_level')->nullable();
             $table->string('section')->nullable();
 
-            // Contact info
+          
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
 
-            // Status
+            
             $table->enum('academic_status', ['active', 'inactive', 'graduated'])->default('active');
-
+            $table->timestamp('graduated_at')->nullable();
             $table->timestamps();
         });
     }

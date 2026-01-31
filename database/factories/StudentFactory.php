@@ -20,17 +20,33 @@ class StudentFactory extends Factory
     protected $model = Student::class;
 
 
-    public function definition(): array
-    {
+    
+
+public function definition(): array
+{
+        $status = $this->faker->randomElement(['active', 'graduated', 'inactive']);
+
+        $createdAt = $this->faker->dateTimeBetween('-4 years', '-1 month');
+
         return [
             'student_number' => $this->faker->unique()->numerify('####'),
             'first_name'     => $this->faker->firstName(),
-            'middle_name'      => $this->faker->lastName(),
+            'middle_name'    => $this->faker->lastName(),
             'last_name'      => $this->faker->lastName(),
             'gender'         => $this->faker->randomElement(['male', 'female']),
-            'course'         => 'BSIT',
-            'year_level'     => $this->faker->numberBetween(1, 4),
-            'academic_status'  => $this->faker->randomElement(['active','graduated','inactive']),
+            'course'         => $this->faker->randomElement(['BSIS','BSCrim','BSTM','BSAIS']),
+            'year_level'     => $status === 'graduated'
+                                ? 4
+                                : $this->faker->numberBetween(1, 4),
+            'academic_status' => $status, 
+
+            'graduated_at' => $status === 'graduated'
+                ? $this->faker->dateTimeBetween($createdAt, 'now')
+                : null,
+
+            'created_at' => $createdAt,
+            'updated_at' => now(),
         ];
     }
+
 }

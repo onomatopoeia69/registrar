@@ -27,6 +27,7 @@ class Student extends Model
         'phone',
         'address',
         'academic_status',
+        'graduated_at',
     ];
 
 

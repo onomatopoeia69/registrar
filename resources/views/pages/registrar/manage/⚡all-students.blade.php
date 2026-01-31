@@ -81,13 +81,21 @@ class extends Component
 
     public function downloadAsExcel()
     {
-        return Excel::download(new StudentsExport($this->search, $this->status), 'students.xlsx');
+        $data = strtolower($this->status);
+
+        $fileName = $data ? "{$data}_student_list.xlsx" : "student_list.xlsx";
+
+        return Excel::download(new StudentsExport($this->search, $this->status),  $fileName);
     }
 
     public function downloadAsCsv(){
-        return Excel::download(
-        new StudentsExport($this->search, $this->status), 
-        'students_report.csv', 
+
+        $data = strtolower($this->status);
+
+        $fileName = $data ? "{$data}_student_list.csv" : "student_list.csv";
+
+        return Excel::download( new StudentsExport($this->search, $this->status), 
+         $fileName, 
         \Maatwebsite\Excel\Excel::CSV
         );
     }
@@ -121,10 +129,11 @@ class extends Component
                     <option value="20">20</option>
                     <option value="40">40</option>
                 </select>
-            </div>
+        </div>
 
 
-            {{-- for the imports file --}}
+        {{-- for the imports file --}}
+
         <div class="mb-4 p-2 d-flex align-items-center gap-2">
 
               <button type="button" class="btn btn-danger btn-sm" wire:click='downloadAsPdf'>
@@ -169,7 +178,7 @@ class extends Component
                 <th scope="col">Name</th>
                 <th scope="col">Course</th>
                 <th scope="col">Status</th>
-                <th scope="col">Actions</th>
+                <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -180,7 +189,20 @@ class extends Component
                     <td>{{ $student->last_name }} {{ $student->first_name }}</td>
                     <td>{{ $student->course }}</td>
                     <td>{{ ucFirst($student->academic_status) }}</td>
-                    <td>..</td>
+                    <td class="d-flex flex-wrap gap-2">
+                       
+                        @if ($student->academic_status != 'inactive')
+                            <button class="btn btn-danger btn-sm">Set Inactive</button>
+                        @else
+                            <button class="btn btn-warning btn-sm">Set Active</button>
+                        @endif
+                        
+                        <button class="btn btn-info btn-sm"><i class="bi bi-lock-fill"></i> Reset Password</button>
+                        <button class="btn btn-secondary btn-sm"> <i class="bi bi-info-circle"></i> Info</button>
+                         <button class="btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i> Edit</button>
+                        <button class="btn btn-success btn-sm" ><i class="bi bi-printer"></i> Print</button>
+
+                    </td>
                 </tr>
                 @empty
 
