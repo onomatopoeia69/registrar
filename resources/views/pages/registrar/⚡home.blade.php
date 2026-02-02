@@ -85,8 +85,8 @@ class extends Component
                 </div>
 
                 <div class="col-lg-4 col-6">
-                    <x-adminlte-small-box title="0" text="Reports" 
-                        icon="fas fa-solid fa-file text-dark" theme="warning" 
+                    <x-adminlte-small-box title="0" text="Maintenance" 
+                        icon="fas fa-solid fa-file text-light" theme="dark" 
                         url="#" url-text="View details"/>
                 </div>
 
