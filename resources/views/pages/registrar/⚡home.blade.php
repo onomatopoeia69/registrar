@@ -33,15 +33,33 @@ class extends Component
         </div>
 
         <div class="card-body">
+
+            <div class="d-flex justify-content-end">
+                <button
+                    type="button"
+                    class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center mb-3"
+                    style="width: 30px; height: 30px;"
+                    wire:click="$refresh"
+                    wire:island='metric'
+                >
+                    <span>
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </span>
+                </button>
+
+                    
+            </div>
+
             <div class="row">
 
-                @island()
-                <div class="col-lg-4 col-6" wire:poll>
+                @island('metric')
+                <div class="col-lg-4 col-6">
                     <x-adminlte-small-box title="{{ $this->activeStudentCount ?? 0 }}" text="Enrolled Students" 
                         icon="fas fa-users text-dark" theme="teal" 
                         url="{{ route('registrar.students.all') }}" url-text="View details"/>
                 </div>
                 @endisland
+             
 
                 <div class="col-lg-4 col-6">
                     <x-adminlte-small-box title="0" text="New Enrollees" 
@@ -51,7 +69,7 @@ class extends Component
 
                 <div class="col-lg-4 col-6">
                     <x-adminlte-small-box title="0" text="Subjects Offered" 
-                        icon="fas bi-journal-bookmark-fill" theme="danger" 
+                        icon="fas fa-solid fa-book" theme="danger" 
                         url="#" url-text="View details"/>
                 </div>
                 <div class="col-lg-4 col-6">
@@ -59,9 +77,45 @@ class extends Component
                         icon="fas bi-file-earmark-break-fill text-dark" theme="success" 
                         url="#" url-text="View details"/>
                 </div>
-            </div>
-            
 
+                 <div class="col-lg-4 col-6">
+                    <x-adminlte-small-box title="0" text="Reports" 
+                        icon="fas fa-solid fa-file text-dark" theme="warning" 
+                        url="#" url-text="View details"/>
+                </div>
+
+                <div class="col-lg-4 col-6">
+                    <x-adminlte-small-box title="0" text="Reports" 
+                        icon="fas fa-solid fa-file text-dark" theme="warning" 
+                        url="#" url-text="View details"/>
+                </div>
+
+            </div>
+
+           
+
+        </div>
+    </div>
+</section>
+
+ 
+
+
+ <section id="box-info2" class="container-fluid pt-4">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title text-bold fs-3">Activity Calendar</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="card-body">
+                    <div id='calendar'></div>
+                </div>
+                
+            <div class="col-lg-4 col-6">
+            </div>
         </div>
     </div>
 </section>
@@ -94,11 +148,73 @@ class extends Component
 </div>
 
 @script
-<script>
+<script >
+    document.addEventListener('livewire:initialized', () => {
+        
 
+         var calendarEl = document.getElementById('calendar');
 
-        window.addEventListener("load", () => {
+        var calendar = new FullCalendar.Calendar(calendarEl, {
 
+          initialView: 'dayGridMonth',
+          height: 400,
+          aspectRatio: 1.6,
+
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+
+            buttonText: {
+                today: 'Today',
+                month: 'Month',
+                week: 'Week',
+                day: 'Day'
+            },
+            selectable: true,
+
+            eventSources: [
+           
+            {
+
+            events: function(info, successCallback, failureCallback) {
+                var year = info.start.getFullYear();
+                fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/PH`)
+                .then(res => res.json())
+                .then(data => {
+                    const holidays = data.map(h => ({ title: h.name, start: h.date, allDay: true, color: 'red' }));
+                    successCallback(holidays);
+                });
+            }
+            },
+           
+            {
+            events: [
+                {
+                title: 'Birthday Party',
+                start: '2026-02-15T19:00:00',
+                end: '2026-02-15T22:00:00',
+                color: '#2ecc71' 
+                },
+                {
+                title: 'Project Deadline',
+                start: '2026-02-04',
+                allDay: true
+                }
+            ]
+            }
+        ]
+            
+        });
+        calendar.render();
+    });
+
+    
+    
+      
+
+    window.addEventListener("load", () => {
 
          setTimeout(() => {
 
@@ -107,7 +223,11 @@ class extends Component
                 introDriver();
             }
 
-           $('#liveToast').toast('show');
+           const toastEl = document.getElementById('liveToast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
 
         }, 5000);
 
@@ -143,12 +263,14 @@ class extends Component
 
         const driver = window.driver.js.driver;
 
-        localStorage.setItem('isDoneTutorial',true);
-
         const driverObj = driver({
         
         showProgress: true,
         allowClose: false,
+
+        onDestroyed: () => {
+            localStorage.setItem('isDoneTutorial', 'true');
+        },
 
 
         steps: [
@@ -162,15 +284,11 @@ class extends Component
         ]
         });
 
-        
-
         driverObj.drive();
 
     }
 
   
-    
-
 
 </script>
 @endscript

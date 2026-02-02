@@ -169,8 +169,8 @@ class extends Component
 
         </div>
 
-        @island
-        <div wire:poll>
+  
+      
         <table class="table table-hover table-striped">
             <thead>
                 <tr>    
@@ -184,7 +184,7 @@ class extends Component
             <tbody>
     
              @forelse($this->students as $key => $student)
-                <tr>
+                <tr wire:key="student-{{ $student->student_number }}" wire:poll.10s.visible>
                     <td>{{ $student->student_number }}</td>
                     <td>{{ $student->last_name }} {{ $student->first_name }}</td>
                     <td>{{ $student->course }}</td>
@@ -197,7 +197,7 @@ class extends Component
                             <button class="btn btn-warning btn-sm">Set Active</button>
                         @endif
                         
-                        <button class="btn btn-info btn-sm"><i class="bi bi-lock-fill"></i> Reset Password</button>
+                        <button class="btn btn-info btn-sm" ><i class="bi bi-lock-fill"></i> Reset Password</button>
                         <button class="btn btn-secondary btn-sm"> <i class="bi bi-info-circle"></i> Info</button>
                          <button class="btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i> Edit</button>
                         <button class="btn btn-success btn-sm" ><i class="bi bi-printer"></i> Print</button>
@@ -213,14 +213,14 @@ class extends Component
             @endforelse
             </tbody>
          </table>
-         </div>
+     
         
 
          <div class="mt-4">
             {{ $this->students->links() }}
         </div>
                 
-         @endisland
+       
 
             
     </div>
@@ -230,12 +230,3 @@ class extends Component
 
 </div>
 
-@script
-<script>
-
-    Livewire.on('reload-page', () => {
-        location.reload();
-    });
-
-</script>
-@endscript
