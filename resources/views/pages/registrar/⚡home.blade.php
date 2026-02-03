@@ -2,6 +2,7 @@
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use App\Models\Student;
+use App\Models\Event;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -17,6 +18,19 @@ class extends Component
 
         return Student::where('academic_status','active')->count();
 
+    }
+
+     #[Computed]
+    public function events()
+    {
+        return Event::all()->map(function ($event) {
+            return [
+                'id'    => $event->id,
+                'title' => $event->title,
+                'start' => $event->start, 
+                'end'   => $event->end,
+            ];
+        });
     }
 
 
@@ -111,7 +125,7 @@ class extends Component
             <div class="row">
 
                 <div class="card-body">
-                    <div id='calendar'></div>
+                    <div wire:ignore id='calendar'></div>
                 </div>
                 
             <div class="col-lg-4 col-6">
@@ -190,19 +204,8 @@ class extends Component
             },
            
             {
-            events: [
-                {
-                title: 'Birthday Party',
-                start: '2026-02-15T19:00:00',
-                end: '2026-02-15T22:00:00',
-                color: '#2ecc71' 
-                },
-                {
-                title: 'Project Deadline',
-                start: '2026-02-04',
-                allDay: true
-                }
-            ]
+            events: @json($this->events)
+
             }
         ]
             

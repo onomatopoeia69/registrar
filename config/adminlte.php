@@ -421,6 +421,14 @@ return [
             'can' => 'registrar',
             
         ],
+        [ 
+            'text' => 'Calendar',
+            'url' => 'registrar/tools/calendar',
+            'icon' => 'fas bi bi-calendar-plus',
+            'can' => 'registrar',
+            
+        ],
+
 
          ['header' => 'Settings'],
         [

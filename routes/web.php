@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Route;
           // tools
          Route::livewire('registrar/tools/notes', 'pages::registrar.tools.notes')->name('registrar.tools.notes'); 
          Route::livewire('registrar/tools/recog', 'pages::registrar.tools.recog')->name('registrar.tools.recog');  
+         Route::livewire('registrar/tools/calendar','pages::registrar.tools.calendar')->name('registrar.tools.calendar');
 
     });
 
