@@ -9,7 +9,6 @@ new
 #[Title('Registrar')]
  class extends Component
 {
-    public $heads = 'test';
 
 
 };

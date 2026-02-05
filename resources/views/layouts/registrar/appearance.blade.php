@@ -6,16 +6,18 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
-         <style>
+        <style>
             :root {
-                --sidebar-bg: {{ request()->cookie('sidebar_bg') }};
-                --brand-link: {{ request()->cookie('brand-link','#343a40') }}
+                --sidebar-bg: {{ request()->cookie('sidebar_bg','#343a40') }};
+                --brand-link: {{ request()->cookie('sidebar_brand','#343a40') }};
             }
         </style>
 
         <link rel="stylesheet" href="{{asset('css/custom.css')}}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+
         @livewireStyles
     </head>
     <body>  
@@ -40,7 +42,6 @@
 
 
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
-     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.5.2/jscolor.min.js" integrity="sha512-qFhMEJrjI50TwLDGZ7Oi0ksTSWnFOqTNXhlqqUgWnE65S23rWUtQOv+tMNEybkMYSXKgAc3eg/SzkX+qrtJT/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>

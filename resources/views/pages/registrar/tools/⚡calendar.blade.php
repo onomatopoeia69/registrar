@@ -4,6 +4,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\DB;
 use App\Models\Event;
+use Carbon\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -45,6 +46,8 @@ new
         $this->description = $data['description'];
 
 
+        $start = Carbon::parse($this->start)->setTimezone('UTC');
+        $end = Carbon::parse($this->end)->setTimezone('UTC');
         
         DB::beginTransaction();
 
@@ -53,8 +56,8 @@ new
 
             Event::create([
                 'title' => $this->title,
-                'start' => $this->start,
-                'end' => $this->end,
+                'start' =>  $start->toDateTimeString(),
+                'end' =>  $end->toDateTimeString(),
                 'description' => $this->description
             ]);
 

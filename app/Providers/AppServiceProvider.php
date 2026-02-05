@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 
@@ -30,7 +31,10 @@ class AppServiceProvider extends ServiceProvider
                 'adminlte.logo_img' =>  $user->profile
                         ? asset('images/'.$user->profile) 
                         : asset('images/default.png'),
-                        
+
+                'adminlte.classes_sidebar' => Cookie::get('custom') ? 
+                                                'sidebar-dark-custom elevation-4' :
+                                                'sidebar-dark-primary elevation-4',
             ]);
         
             

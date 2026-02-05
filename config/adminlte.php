@@ -198,7 +198,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-dark navbar-dark',
+    'classes_topnav' => 'navbar-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -439,17 +439,38 @@ return [
             'can' => 'registrar',
             'submenu' => [
                 [
+                    'text' => 'Profile Information',
+                    'url' => 'registrar/settings/profile/info',
+                    'icon' => 'fas fa-user-circle',
+                ],
+                [
                     'text' => 'change_password',
                     'url' => 'admin/settings',
                     'icon' => 'fas fa-fw fa-lock',
+                ]
+                
+            ],
+        ],
+        [
+            'text' => 'General',
+            'id' => 'system',
+            'url' => '#',
+            'icon' => 'fas fa-solid fa-palette',
+            'can' => 'registrar',
+            'submenu' => [
+                 [
+                    'text' => 'Appearance',
+                    'url' => 'registrar/settings/appearance',
+                    'icon' => 'fas fa-solid fa-palette',
                 ],
                 [
                     'text' => 'System Information',
                     'url' => 'registrar/settings/info',
                     'icon' => 'fas bi bi-info-circle',
                 ],
-            ],
-        ],
+            ]
+
+        ]
 
       
 
@@ -494,7 +515,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -515,7 +536,7 @@ return [
         ],
 
         'DatatablesPlugins' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',

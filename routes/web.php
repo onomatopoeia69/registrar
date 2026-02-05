@@ -40,7 +40,9 @@ use Illuminate\Support\Facades\Route;
          // students
          Route::livewire('registrar/manage/students', 'pages::registrar.manage.all-students')->name('registrar.students.all');          
           //settings
-         Route::livewire('registrar/settings/info', 'pages::registrar.settings.system')->name('registrar.system'); 
+         Route::livewire('registrar/settings/info', 'pages::registrar.settings.system')->name('registrar.system');
+         Route::livewire('registrar/settings/appearance', 'pages::registrar.settings.appearance')->name('registrar.appearance');
+         Route::livewire('registrar/settings/profile/info','pages::registrar.settings.profile.info')->name('registrar.info');
           // tools
          Route::livewire('registrar/tools/notes', 'pages::registrar.tools.notes')->name('registrar.tools.notes'); 
          Route::livewire('registrar/tools/recog', 'pages::registrar.tools.recog')->name('registrar.tools.recog');  

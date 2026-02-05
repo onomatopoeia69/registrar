@@ -6,6 +6,13 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
+         <style>
+            :root {
+                --sidebar-bg: {{ request()->cookie('sidebar_bg') }} ;
+                --brand-link: {{ request()->cookie('sidebar_brand','#343a40') }}
+            }
+        </style>
+
          <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css"/>
         <link rel="stylesheet" href="{{asset('css/custom.css')}}">
