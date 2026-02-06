@@ -22,6 +22,11 @@ class Event extends Model
         'all_day'
     ];
 
+    protected $casts = [
+    'start' => 'datetime',
+    'end'   => 'datetime',
+    ];
+
 
 
 

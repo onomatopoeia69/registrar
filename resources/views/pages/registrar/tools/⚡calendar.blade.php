@@ -45,9 +45,8 @@ new
         $this->end = $data['end'];
         $this->description = $data['description'];
 
-
-        $start = Carbon::parse($this->start)->setTimezone('UTC');
-        $end = Carbon::parse($this->end)->setTimezone('UTC');
+        $start = Carbon::parse($this->start)->setTimezone('Asia/Manila');
+        $end = Carbon::parse($this->end)->setTimezone('Asia/Manila');
         
         DB::beginTransaction();
 
@@ -62,6 +61,8 @@ new
             ]);
 
             $this->dispatch('close-modal');
+
+            $this->dispatch('refresh-calendar');
             
             DB::commit(); 
 
@@ -93,7 +94,7 @@ new
        
             </div>
 
-             <div class="modal fade"  data-bs-backdrop="static"  id="eventModal" tabindex="-1" aria-hidden="true" wire:ignore>
+        <div class="modal fade"  data-bs-backdrop="static"  id="eventModal" tabindex="-1" aria-hidden="true" wire:ignore>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -171,6 +172,7 @@ new
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
           themeSystem: 'bootstrap5',
+          timeZone: 'local',
           initialView: 'dayGridMonth',
           height: 500,
           aspectRatio: 1.6,
@@ -221,14 +223,25 @@ new
             }
             },
             {
-                 id: 'db-events',
-                events: @json($this->events),
+                id: 'db-events',         
+                url: '/api/calendar-events', 
+                method: 'GET',
+                failure: function() {
+                    alert('There was an error fetching events!');
+                }
             }
         ]
             
         });
 
         calendar.render();
+
+    
+    $wire.on('refresh-calendar', () => {
+        
+        calendar.getEventSourceById('db-events').refetch();
+    });
+
 
 
 

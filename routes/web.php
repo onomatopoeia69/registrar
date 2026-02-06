@@ -48,6 +48,15 @@ use Illuminate\Support\Facades\Route;
          Route::livewire('registrar/tools/recog', 'pages::registrar.tools.recog')->name('registrar.tools.recog');  
          Route::livewire('registrar/tools/calendar','pages::registrar.tools.calendar')->name('registrar.tools.calendar');
 
+         Route::get('/api/calendar-events', function () {
+          return App\Models\Event::all()->map(fn($event) => [
+               'id'    => $event->id,
+               'title' => $event->title,
+               'start' => $event->start->toIso8601String(),
+               'end'   => $event->end->toIso8601String(),
+          ]);
+          })->name('events.feed');
+
     });
 
     

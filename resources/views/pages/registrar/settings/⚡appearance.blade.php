@@ -131,7 +131,8 @@ saveBtn.addEventListener('click', () => {
     location.reload();
 });
 
-sidebar_brand
+
+
 
 </script>
 @endscript
