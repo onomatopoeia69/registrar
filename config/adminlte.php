@@ -514,6 +514,8 @@ return [
     */
 
     'plugins' => [
+
+
         'Datatables' => [
             'active' => false,
             'files' => [
@@ -535,6 +537,7 @@ return [
             ],
         ],
 
+       
         'DatatablesPlugins' => [
             'active' => false,
             'files' => [

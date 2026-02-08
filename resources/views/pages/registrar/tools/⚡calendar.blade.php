@@ -18,24 +18,14 @@ new
     public $start='';
     public $end = '';
     public $description = '';
+    public $bgColor = '';
 
-  #[Computed]
-    public function events()
-    {
-        return Event::all()->map(function ($event) {
-            return [
-                'id'    => $event->id,
-                'title' => $event->title,
-                'start' => $event->start, 
-                'end'   => $event->end,
-            ];
-        });
-    }
 
     public function resetField(){
 
         $this->reset();
     }
+
 
     public function submit($data)
     {
@@ -44,6 +34,8 @@ new
         $this->start = $data['start'];
         $this->end = $data['end'];
         $this->description = $data['description'];
+        $this->bgColor = $data['bgColor'];
+
 
         $start = Carbon::parse($this->start)->setTimezone('Asia/Manila');
         $end = Carbon::parse($this->end)->setTimezone('Asia/Manila');
@@ -57,7 +49,8 @@ new
                 'title' => $this->title,
                 'start' =>  $start->toDateTimeString(),
                 'end' =>  $end->toDateTimeString(),
-                'description' => $this->description
+                'description' => $this->description,
+                'background_color' => $this->bgColor,
             ]);
 
             $this->dispatch('close-modal');
@@ -89,9 +82,7 @@ new
 
     
             <div class="card-body" wire:ignore>
-                <div id="calendar2" ></div>
-
-       
+                <div id="calendar2"></div>
             </div>
 
         <div class="modal fade"  data-bs-backdrop="static"  id="eventModal" tabindex="-1" aria-hidden="true" wire:ignore>
@@ -102,14 +93,34 @@ new
                         <button type="button" id="close" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+
+                        <div class="d-flex justify-content-end align-items-center mb-2 gap-2">
+
+                        <input type="radio" class="btn-check" name="color" id="red" value="#dc3545" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="red"></label>
+                            
+                        <input type="radio" class="btn-check" name="color" id="green"  value="#198754" autocomplete="off">
+                        <label class="btn btn-outline-success" for="green"></label>
+
+                         <input type="radio" class="btn-check" name="color" id="yellow" value="#ffc107" autocomplete="off" >
+                        <label class="btn btn-outline-warning" for="yellow"></label>
+
+                        <input type="radio" class="btn-check" name="color" id="blue" value="#0d6efd" autocomplete="off" checked >
+                        <label class="btn btn-outline-primary" for="blue"></label>
+
+                        </div>
+
+                        
+                     <div class="container"> 
                         <label for="">Start Date</label>
                         <input type="text" id="startDate" class="form-control" readonly>
                          <label for="">End Date</label>
-                         <input type="text" id="endDate" class="form-control" readonly>
+                         <input type="text" id="endDate" class="form-control mb-2" readonly>
                           <label for="">Title</label>
-                        <input type="text" id="eventTitle" class="form-control mt-2" placeholder="Event Name">
+                        <input type="text" id="eventTitle" class="form-control mb-2" placeholder="Event Name">
                           <label for="">Description</label>
-                        <textarea type="textarea" id="desc" class="form-control mt-2" placeholder="Description"></textarea>
+                        <textarea type="textarea" id="desc" class="form-control mb-2" placeholder="Description"></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button id="save" type="button" class="btn btn-primary">Save Event</button>
@@ -117,6 +128,27 @@ new
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" tabindex="-1" id="infoModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoTitle"></h5>
+                    <button type="button" class="btn-close" id="infoClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
 
 
         </div>
@@ -131,11 +163,21 @@ new
 
 
         const modalEl = document.getElementById('eventModal');
+        const info = document.getElementById('infoModal');
+
          const modal = new bootstrap.Modal(modalEl, {
                 backdrop: 'static',
                 keyboard: false
             });
-         var calendarEl = document.getElementById('calendar2');
+
+         const infoModal = new bootstrap.Modal(info, {
+            backdrop: 'static',
+                keyboard: false
+         });
+
+      
+
+        //  for the creation 
 
          document.getElementById('close').addEventListener('click',()=>{
 
@@ -149,7 +191,7 @@ new
          $wire.on('close-modal',()=>{
 
             document.getElementById('eventTitle').value = '';
-             document.getElementById('desc').value = '';
+            document.getElementById('desc').value = '';
             $wire.resetField();
             modal.hide();
 
@@ -158,16 +200,30 @@ new
 
          document.getElementById('save').addEventListener('click',()=>{
 
+         
             $wire.submit({
                 title: document.getElementById('eventTitle').value,
                 start: document.getElementById('startDate').value,
                 end: document.getElementById('endDate').value,
                 description: document.getElementById('desc').value,
+                bgColor: document.querySelector('input[name="color"]:checked').value
             });
 
          });
+
+        //  for deletion and fetching 
+
+        document.getElementById('infoClose').addEventListener('click',()=>{
+
+
+            infoModal.hide();
+
+        });
+
+
+
     
-       
+        var calendarEl = document.getElementById('calendar2');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -203,7 +259,11 @@ new
             },
 
             eventClick: function(info) {
-            alert('Event: ' + info.event.title);
+
+               document.getElementById('infoTitle').textContent = info.event.title;
+
+                infoModal.show();
+            
              },
 
             eventDrop:true,
@@ -230,6 +290,9 @@ new
                     alert('There was an error fetching events!');
                 }
             }
+
+
+
         ]
             
         });
@@ -238,7 +301,6 @@ new
 
     
     $wire.on('refresh-calendar', () => {
-        
         calendar.getEventSourceById('db-events').refetch();
     });
 

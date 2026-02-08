@@ -8,7 +8,7 @@
 
          <style>
             :root {
-                --sidebar-bg: {{ request()->cookie('sidebar_bg') }} ;
+                --sidebar-bg: {{ request()->cookie('sidebar_bg','#343a40') }} ;
                 --brand-link: {{ request()->cookie('sidebar_brand','#343a40') }}
             }
         </style>
